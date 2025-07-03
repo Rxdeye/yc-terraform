@@ -1,4 +1,5 @@
-About project 
+About project
+
 This is a learning project that deploys an infrastructure consisting of group backends,
  a database, and a Yandex load balancer. Since I specialize in devops, the backends
  and database are very simple and have no practical application. The infrastructure
