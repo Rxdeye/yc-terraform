@@ -1,0 +1,68 @@
+- name: "Install docker with sudo"
+  hosts: vm1-postgres
+  become: yes
+
+  tasks:
+  - name: "Add docker GPG key and repo"
+    shell: |
+      sudo apt-get update &&
+      sudo apt-get install ca-certificates curl &&
+      sudo install -m 0755 -d /etc/apt/keyrings &&
+      sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc &&
+      sudo chmod a+r /etc/apt/keyrings/docker.asc
+    args:
+      executable: /bin/bash
+
+  - name: "Add repository to apt sources"
+    shell: |
+      echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+        $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+        sudo tee /etc/apt/sources.list.d/docker.list > /dev/null 
+    args:
+      executable: /bin/bash
+
+  - name: "Install docker"
+    apt:
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+      state: present
+      update_cache: yes
+
+  - name: "Deploy Docker compose"
+    ansible.builtin.copy:
+      src: "{{ docker_compose1 }}"
+      dest: /home/ubuntu/docker-compose_bd.yml
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
+
+  - name: "Deploy Docker compose 2"
+    ansible.builtin.copy:
+      src: "{{ docker_compose2 }}"
+      dest: /home/ubuntu//docker-compose_node.yml
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
+
+  - name: "Copy db data"
+    copy:
+      src: "{{ database_data_path }}"
+      dest: /home/ubuntu/init.sql
+      owner: ubuntu
+      group: ubuntu
+      mode: '0644'
+    
+
+  - name: "Up Postgresql"
+    ansible.builtin.command: docker compose -f /home/ubuntu/docker-compose_bd.yml up -d
+
+  - name: "Up node"
+    ansible.builtin.command: docker compose -f /home/ubuntu/docker-compose_node.yml up -d 
+
+  
+
