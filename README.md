@@ -1,3 +1,5 @@
+About project
+
 This is a learning project that deploys an infrastructure consisting of group backends,
  a database, and a Yandex load balancer. Since I specialize in devops, the backends
  and database are very simple and have no practical application. The infrastructure
@@ -6,10 +8,11 @@ This is a learning project that deploys an infrastructure consisting of group ba
  by recording IP addresses in the Prometheus targets. Metrics are transmitted using
  node_exporter, which is then transferred to the virtual machines. The backend image
  is built using packer and user-data.sh.
- How to use:
+
+ How to use 
  
  0. git clone https://github.com/Rxdeye/yc-terraform
- 1. packer init ./config.pkr.hcl
+ 1. packer init ./config.pkr.hcl and insert your values in image.json
  2. Build a packer image for backends.
  3. Insert packer image_id in main.tf( autoscale-group )
  4. Insert your values in variables.tf
@@ -22,7 +25,8 @@ This is a learning project that deploys an infrastructure consisting of group ba
  11. http://localhost:3000(grafana)
  12. done!)
 
-utilities:
+Utilities: 
+
 Terraform v.1.12.1
 Ansible [ core 2.18.6 ]
 Packer v1.13.1
