@@ -6,7 +6,8 @@ This is a learning project that deploys an infrastructure consisting of group ba
  by recording IP addresses in the Prometheus targets. Metrics are transmitted using
  node_exporter, which is then transferred to the virtual machines. The backend image
  is built using packer and user-data.sh.
- How to use: 
+ How to use:
+ 
  0. git clone https://github.com/Rxdeye/yc-terraform
  1. packer init ./config.pkr.hcl
  2. Build a packer image for backends.
@@ -20,6 +21,7 @@ This is a learning project that deploys an infrastructure consisting of group ba
  10. in prometheus/ docker compose up -d
  11. http://localhost:3000(grafana)
  12. done!)
+
 utilities:
 Terraform v.1.12.1
 Ansible [ core 2.18.6 ]
