@@ -20,8 +20,8 @@ This is a learning project that deploys an infrastructure consisting of group ba
  10. in prometheus/ docker compose up -d
  11. http://localhost:3000(grafana)
  12. done!)
- utilities:
- Terraform v.1.12.1
- Ansible [ core 2.18.6 ]
- Packer v1.13.1
- Docker compose v2.36.2
+utilities:
+Terraform v.1.12.1
+Ansible [ core 2.18.6 ]
+Packer v1.13.1
+Docker compose v2.36.2
